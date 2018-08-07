@@ -16,13 +16,24 @@ module.exports = {
   module: {
     rules: [
       {
+        exclude: /node_modules|packages/,
         test: /\.css$/,
         use: ['style-loader', { loader: 'css-loader', options: { importLoaders: 1 } }, 'postcss-loader'],
+      },
+      {
+        test: /\.css$/,
+        include: /node_modules\/bootstrap/,
+        loader: 'style-loader!css-loader'
+      },
+      { 
+        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+        loader: 'url-loader?limit=100000' 
       },
       {
         exclude: /node_modules|packages/,
         test: /\.js$/,
         use: 'babel-loader',
+        use: [{ loader: 'babel-loader', options: { presets: ['es2015', 'react'] } }],
       },
     ],
   },
